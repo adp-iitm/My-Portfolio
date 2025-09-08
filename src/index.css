@@ -51,7 +51,7 @@
   }
   
   .section-padding {
-    @apply py-14 sm:py-16 px-3 sm:px-6 lg:px-8;
+    @apply py-16 px-4 sm:px-6 lg:px-8;
   }
   
   .container-max {

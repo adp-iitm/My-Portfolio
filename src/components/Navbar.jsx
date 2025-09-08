@@ -127,7 +127,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <div ref={containerRef} className="hidden md:flex items-center gap-6 lg:gap-8 relative">
+          <div ref={containerRef} className="hidden lg:flex items-center gap-6 xl:gap-8 relative">
             {navItems.map((item, i) => (
               <button
                 key={item.name}
@@ -175,7 +175,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg transition-colors duration-200"
+              className="lg:hidden p-2 rounded-lg transition-colors duration-200"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
@@ -189,8 +189,8 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             height: isOpen ? 'auto' : 0,
             opacity: isOpen ? 1 : 0,
           }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
+          transition={{ duration: 0.25 }}
+          className="lg:hidden overflow-hidden"
         >
           <div className="px-4 py-2 space-y-2">
             {navItems.map((item) => (

@@ -143,7 +143,7 @@ const Hero = ({ darkMode }) => {
               <img
                 src={profileImage}
                 alt="Profile"
-                className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 mx-auto mb-8 rounded-full object-cover border-4 border-primary-600"
+                className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 mx-auto mb-8 rounded-full object-cover border-4 border-primary-600"
               />
             </motion.div>
 
@@ -151,7 +151,7 @@ const Hero = ({ darkMode }) => {
 
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-2"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-2"
           >
             <motion.span
               initial={{ backgroundPosition: '0% 50%' }}
@@ -169,7 +169,7 @@ const Hero = ({ darkMode }) => {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className={`text-lg md:text-2xl mb-4 font-medium ${
+            className={`text-xl md:text-2xl mb-4 font-medium ${
               darkMode ? 'text-gray-300' : 'text-gray-700'
             }`}
           >
