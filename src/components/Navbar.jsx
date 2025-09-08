@@ -115,7 +115,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
       {/* Subtle Indian-inspired top accent bar (peacock blue to marigold) */}
       <div className="h-1 w-full bg-gradient-to-r from-indigo-800 via-fuchsia-600 to-amber-500" />
       <div className="container-max">
-        <div className="flex items-center justify-between h-16 px-4">
+        <div className="flex items-center justify-between h-16 px-3 sm:px-4">
           {/* Logo */}
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -127,7 +127,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <div ref={containerRef} className="hidden md:flex items-center space-x-8 relative">
+          <div ref={containerRef} className="hidden md:flex items-center gap-6 lg:gap-8 relative">
             {navItems.map((item, i) => (
               <button
                 key={item.name}
