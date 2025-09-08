@@ -35,8 +35,8 @@ const Projects = ({ darkMode }) => {
         'Role-based web platform using AI/ML to transform live camera feeds into actionable insights. Reduced manual surveillance and attendance logging by 70%, improving operational efficiency.',
       image: '📹',
       technologies: ['AI/ML', 'React', 'Node.js', 'OpenCV', 'PostgreSQL'],
-      github: 'https://github.com/yourusername/ai-surveillance-platform',
-      demo: 'https://demo.com/ai-surveillance',
+      github: 'https://github.com/adp-iitm/VisionCapture',
+      demo: 'https://your-live-demo-link.com/ai-surveillance', // 🔗 replace with real demo URL
       category: 'Full Stack',
       icon: Code,
     },
@@ -46,8 +46,8 @@ const Projects = ({ darkMode }) => {
         'Data-driven system that simulates full scorecards using player stats, pitch conditions, and historical match data. Achieved 80% prediction accuracy with real-time strategic insights.',
       image: '🏏',
       technologies: ['Python', 'Machine Learning', 'Pandas', 'NumPy', 'Matplotlib'],
-      github: 'https://github.com/yourusername/cricket-predictor',
-      demo: 'https://demo.com/cricket-predictor',
+      github: 'https://github.com/adp-iitm/cricket_predictor',
+      demo: 'https://your-live-demo-link.com/cricket-predictor', // 🔗 replace with real demo URL
       category: 'Backend',
       icon: Code,
     },
@@ -57,8 +57,8 @@ const Projects = ({ darkMode }) => {
         'AI-powered data analysis web app built with FastAPI and LangChain using Google Gemini. Handles user questions, datasets, visualizations, and secure sandboxed code execution.',
       image: '🤖',
       technologies: ['FastAPI', 'Python', 'LangChain', 'Gemini Pro', 'Pandas', 'Matplotlib'],
-      github: 'https://github.com/yourusername/tds-data-agent',
-      demo: 'https://demo.com/tds-agent',
+      github: 'https://github.com/adp-iitm/tds_project2',
+      demo: 'https://tds-project2-vqxd.onrender.com/', // ✅ already live
       category: 'Full Stack',
       icon: Code,
     },
@@ -68,8 +68,8 @@ const Projects = ({ darkMode }) => {
         'A modern, responsive portfolio built with React and Framer Motion. Features smooth animations, dark mode, and showcases projects and skills.',
       image: '🎨',
       technologies: ['React', 'Framer Motion', 'Tailwind CSS', 'Vercel'],
-      github: 'https://github.com/yourusername/portfolio',
-      demo: 'https://yourusername.vercel.app',
+      github: 'https://github.com/adp-iitm/My-Portfolio',
+      demo: 'https://adityapareek.vercel.app/', // ✅ already live
       category: 'Frontend',
       icon: Palette,
     },
@@ -146,7 +146,7 @@ const Projects = ({ darkMode }) => {
             <motion.div
               key={project.title}
               variants={itemVariants}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -10, rotate: [0, -0.25, 0.25, 0] }}
               className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
                 darkMode
                   ? "bg-dark-800 border border-dark-700"
@@ -159,7 +159,13 @@ const Projects = ({ darkMode }) => {
                   darkMode ? "bg-dark-700" : "bg-gray-100"
                 }`}
               >
-                {project.image}
+                <motion.span
+                  initial={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 200 }}
+                >
+                  {project.image}
+                </motion.span>
               </div>
 
               {/* Project Content */}
@@ -240,8 +246,8 @@ const Projects = ({ darkMode }) => {
                 </div>
               </div>
 
-              {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Hover Effect – now non-blocking */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </motion.div>
           ))}
         </motion.div>

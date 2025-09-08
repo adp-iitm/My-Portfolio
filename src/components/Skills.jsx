@@ -220,3 +220,4 @@ const Skills = ({ darkMode }) => {
 };
 
 export default Skills;
+

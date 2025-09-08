@@ -178,3 +178,4 @@ const Footer = ({ darkMode }) => {
 };
 
 export default Footer;
+

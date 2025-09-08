@@ -180,3 +180,4 @@ If you have any questions or need help with customization, feel free to reach ou
 ---
 
 **Made with ❤️ and React**
+

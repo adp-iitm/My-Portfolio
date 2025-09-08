@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 
 const Navbar = ({ darkMode, toggleDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const containerRef = useRef(null);
+  const itemRefs = useRef([]);
+  const [underline, setUnderline] = useState({ left: 0, width: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +16,27 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = ['home', 'about', 'skills', 'projects', 'contact'];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5, rootMargin: '-20% 0px -40% 0px' }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
   const navItems = [
@@ -25,10 +50,54 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
   const scrollToSection = (href) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Smooth scroll with easing and header offset
+      const headerOffset = 72; // approx navbar height
+      const rect = element.getBoundingClientRect();
+      const targetY = window.pageYOffset + rect.top - headerOffset;
+
+      const startY = window.pageYOffset;
+      const distance = targetY - startY;
+      const duration = Math.min(900, Math.max(400, Math.abs(distance) * 0.5));
+      const startTime = performance.now();
+
+      const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+      const step = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const eased = easeInOutCubic(progress);
+        window.scrollTo(0, startY + distance * eased);
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
     }
     setIsOpen(false);
   };
+
+  const updateUnderlineToIndex = (idx) => {
+    const container = containerRef.current;
+    const target = itemRefs.current[idx];
+    if (!container || !target) return;
+    const cRect = container.getBoundingClientRect();
+    const tRect = target.getBoundingClientRect();
+    const left = tRect.left - cRect.left;
+    const width = tRect.width;
+    setUnderline({ left, width });
+  };
+
+  useEffect(() => {
+    const idx = navItems.findIndex((n) => n.href.replace('#', '') === activeSection);
+    updateUnderlineToIndex(idx >= 0 ? idx : 0);
+  }, [activeSection]);
+
+  useEffect(() => {
+    const onResize = () => {
+      const idx = navItems.findIndex((n) => n.href.replace('#', '') === activeSection);
+      updateUnderlineToIndex(idx >= 0 ? idx : 0);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [activeSection]);
 
   return (
     <motion.nav
@@ -43,33 +112,49 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           : 'bg-transparent'
       }`}
     >
+      {/* Subtle Indian-inspired top accent bar (peacock blue to marigold) */}
+      <div className="h-1 w-full bg-gradient-to-r from-indigo-800 via-fuchsia-600 to-amber-500" />
       <div className="container-max">
         <div className="flex items-center justify-between h-16 px-4">
           {/* Logo */}
-          <motion.div
+          <motion.button
             whileHover={{ scale: 1.05 }}
-            className="text-xl font-bold gradient-text"
+            onClick={() => scrollToSection('#home')}
+            className="text-xl font-bold gradient-text flex items-center gap-2"
           >
+            <span role="img" aria-label="diya">🪔</span>
             Portfolio
-          </motion.div>
+          </motion.button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <motion.button
+          <div ref={containerRef} className="hidden md:flex items-center space-x-8 relative">
+            {navItems.map((item, i) => (
+              <button
                 key={item.name}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                ref={(el) => (itemRefs.current[i] = el)}
+                onMouseEnter={() => updateUnderlineToIndex(i)}
+                onMouseLeave={() => {
+                  const idx = navItems.findIndex((n) => n.href.replace('#', '') === activeSection);
+                  updateUnderlineToIndex(idx >= 0 ? idx : 0);
+                }}
                 onClick={() => scrollToSection(item.href)}
-                className={`text-sm font-medium transition-colors duration-200 ${
+                className={`relative text-sm font-medium transition-colors duration-200 ${
                   darkMode
                     ? 'text-gray-300 hover:text-white'
                     : 'text-gray-600 hover:text-gray-900'
-                }`}
+                } ${activeSection === item.href.replace('#', '') ? 'text-primary-600 dark:text-primary-400' : ''}`}
               >
                 {item.name}
-              </motion.button>
+              </button>
             ))}
+            {/* Shared underline indicator */}
+            <motion.span
+              className="nav-underline"
+              initial={false}
+              animate={{ x: underline.left, width: underline.width }}
+              transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+              style={{ left: 0 }}
+            />
           </div>
 
           {/* Dark Mode Toggle & Mobile Menu Button */}
@@ -113,13 +198,20 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                 key={item.name}
                 whileHover={{ x: 10 }}
                 onClick={() => scrollToSection(item.href)}
-                className={`block w-full text-left py-2 text-sm font-medium transition-colors duration-200 ${
+                className={`relative block w-full text-left py-2 text-sm font-medium transition-colors duration-200 ${
                   darkMode
                     ? 'text-gray-300 hover:text-white'
                     : 'text-gray-600 hover:text-gray-900'
-                }`}
+                } ${activeSection === item.href.replace('#', '') ? 'text-primary-600 dark:text-primary-400' : ''}`}
               >
                 {item.name}
+                <span
+                  className={`absolute bottom-0 left-0 h-0.5 rounded-full transition-all duration-300 ${
+                    activeSection === item.href.replace('#', '')
+                      ? 'w-16 bg-gradient-to-r from-amber-500 to-indigo-700'
+                      : 'w-0 bg-transparent'
+                  }`}
+                />
               </motion.button>
             ))}
           </div>
@@ -130,3 +222,4 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
 };
 
 export default Navbar;
+

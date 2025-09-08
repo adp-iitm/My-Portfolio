@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin } from 'lucide-react';
 
 const Contact = ({ darkMode }) => {
   const ref = useRef(null);
@@ -42,9 +42,16 @@ const Contact = ({ darkMode }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
+    const to = 'adpaniitian@gmail.com';
+    const subject = encodeURIComponent(`${formData.subject} — from ${formData.name}`);
+    const bodyLines = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      '',
+      formData.message,
+    ];
+    const body = encodeURIComponent(bodyLines.join('\n'));
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
@@ -79,15 +86,10 @@ const Contact = ({ darkMode }) => {
     {
       icon: Linkedin,
       name: 'LinkedIn',
-      url: 'https://docs.google.com/spreadsheets/d/1OabI_NDB5OQAan93ezERfEla8ZoXee2MwC6IUnnuRbc/edit?usp=sharing',
+      url: 'https://www.linkedin.com/in/aditya-pareek-235280293?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
       color: 'hover:text-blue-600',
     },
-    {
-      icon: Twitter,
-      name: 'Twitter',
-      url: 'https://twitter.com',
-      color: 'hover:text-blue-400',
-    },
+    
   ];
 
   return (
@@ -338,3 +340,4 @@ const Contact = ({ darkMode }) => {
 };
 
 export default Contact;
+
