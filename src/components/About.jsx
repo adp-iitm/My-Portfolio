@@ -54,7 +54,7 @@ const About = ({ darkMode }) => {
                 }`}
               >
                 <div className="w-full h-full bg-gradient-to-br from-primary-600 to-purple-600 flex items-center justify-center text-white text-6xl font-bold">
-                  Aditya pareek
+                  Aditya Pareek
                 </div>
               </motion.div>
               <motion.div

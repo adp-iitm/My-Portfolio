@@ -143,7 +143,8 @@ const Hero = ({ darkMode }) => {
               <img
                 src={profileImage}
                 alt="Profile"
-                className="w-33 h-32 mx-auto mb-8 rounded-full object-cover border-4 border-primary-600"
+                className="w-28 h-28 sm:w-35 sm:h-36 md:w-36 md:h-36 mx-auto mb-8 rounded-full object-cover border-4 border-primary-600"
+
               />
             </motion.div>
 
