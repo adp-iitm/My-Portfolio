@@ -20,8 +20,9 @@ Tech Stack
 - PostCSS: CSS processing with autoprefixer
 
 Access URL's
-helloaditya.vercel.app
-adityapareek.vercel.app
+
+- helloaditya.vercel.app
+- adityapareek.vercel.app
   
 
 
