@@ -1,5 +1,6 @@
 My Portfolio
 A fully functional, modern React portfolio website built with TailwindCSS and Framer Motion. Features dark/light mode toggle, smooth animations, and responsive design.
+
 Sections
 
 - Navbar: Smooth scroll navigation with dark mode toggle
@@ -10,7 +11,7 @@ Sections
 - Contact: Contact form and information
 - Footer: Links, social media, and back-to-top functionality
 
-## 🛠️ Tech Stack
+Tech Stack
 
 - React 18: Latest version with modern features
 - TailwindCSS: Utility-first CSS framework
@@ -18,7 +19,9 @@ Sections
 - Lucide React: Beautiful icon library
 - PostCSS: CSS processing with autoprefixer
 
-
+Access URL's
+helloaditya.vercel.app
+adityapareek.vercel.app
   
 
 
