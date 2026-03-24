@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Github, Linkedin, Mail, Volume2 } from 'lucide-react';
-import profileImage from '../assets/profile.jpeg';
+import profileImage from '../assets/profile.jpg';
 
 const Hero = ({ darkMode }) => {
   const containerVariants = {
