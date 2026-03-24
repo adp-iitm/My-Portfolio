@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import profileImage from '../assets/profile.jpeg';
+import profileImage from '../assets/profile.jpg';
 
 
 const About = ({ darkMode }) => {
